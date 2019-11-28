@@ -1,62 +1,83 @@
 <!doctype html>
 <html>
-
 <head>
-    <meta charset="utf-8" />
-    <title>ZIM - Code Creativity</title>
+<meta charset="utf-8" />
+<title>ZIM - Code Creativity</title>
 
-    <!-- Welcome to ZIM at https://zimjs.com - Code Creativity!                              -->
-    <!-- ZIM runs on the HTML Canvas powered by JavaScript and CreateJS https://createjs.com -->
-    <!-- Founded by Inventor Dan Zen - http://danzen.com - Canadian New Media Award Winner   -->
-    <!-- ZIM is free to use. You can donate to help improve ZIM at https://zimjs.com/donate  -->
+<!-- Welcome to ZIM at https://zimjs.com - Code Creativity!                              -->
+<!-- ZIM runs on the HTML Canvas powered by JavaScript and CreateJS https://createjs.com -->
+<!-- Founded by Inventor Dan Zen - http://danzen.com - Canadian New Media Award Winner   -->
+<!-- ZIM is free to use. You can donate to help improve ZIM at https://zimjs.com/donate  -->
 
-    <script src="https://zimjs.org/cdn/1.2.3/createjs_min.js"></script>
-    <script src="https://zimjs.org/cdn/10.6.1/zim.js"></script>
-    <!-- use zimjs.com/distill for minified individual functions! -->
+<script src="https://zimjs.org/cdn/1.2.3/createjs_min.js"></script>
+<script src="https://zimjs.org/cdn/10.6.1/zim.js"></script>
+<!-- use zimjs.com/distill for minified individual functions! -->
 
-    <script>
+<script>
 
-        // SCALING OPTIONS
-        // scaling can have values as follows with full being the default
-        // "fit"	sets canvas and stage to dimensions and scales to fit inside window size
-        // "outside"	sets canvas and stage to dimensions and scales to fit outside window size
-        // "full"	sets stage to window size with no scaling
-        // "tagID"	add canvas to HTML tag of ID - set to dimensions if provided - no scaling
+// SCALING OPTIONS
+// scaling can have values as follows with full being the default
+// "fit"	sets canvas and stage to dimensions and scales to fit inside window size
+// "outside"	sets canvas and stage to dimensions and scales to fit outside window size
+// "full"	sets stage to window size with no scaling
+// "tagID"	add canvas to HTML tag of ID - set to dimensions if provided - no scaling
 
-        const scaling = "fit"; // this will resize to fit inside the screen dimensions
-        const width = 1024;
-        const height = 768;
-        const color = light; // ZIM colors like green, blue, pink, faint, clear, etc.
-        const outerColor = dark; // any HTML colors like "violet", "#333", etc. are fine to use
+const scaling = "fit"; // this will resize to fit inside the screen dimensions
+const width = 1024;
+const height = 768;
+const color = light; // ZIM colors like green, blue, pink, faint, clear, etc.
+const outerColor = dark; // any HTML colors like "violet", "#333", etc. are fine to use
+const assets = ["mom.png", "baby.png", "introback.png", "penguin_1-01.png"];
+const path = "assets/";
 
-        const frame = new Frame(scaling, width, height, color, outerColor);
-        frame.on("ready", () => { // ES6 Arrow Function - like function(){}
-            zog("ready from ZIM Frame"); // logs in console (F12 - choose console)
+const frame = new Frame(scaling, width, height, color, outerColor, assets, path);
+frame.on("ready", () => { // ES6 Arrow Function - like function(){}
+    zog("ready from ZIM Frame"); // logs in console (F12 - choose console)
 
-            const stage = frame.stage;
-            let stageW = frame.width;
-            let stageH = frame.height;
+    const stage = frame.stage;
+    let stageW = frame.width;
+    let stageH = frame.height;
 
-            // see https://zimjs.com/learn.html for video and code tutorials
-            // see https://zimjs.com/docs.html for documentation
-            // see https://zimjs.com/bits.html for 64 Interactive Media techniques
+    // var mom = frame.asset("mom.png");
+    // var baby = frame.asset("baby.png");
+    var bg = frame.asset("introback.png");
 
-            // put your code here (you can delete this sample code)
+    // see https://zimjs.com/learn.html for video and code tutorials
+    // see https://zimjs.com/docs.html for documentation
+    // see https://zimjs.com/bits.html for 64 Interactive Media techniques
+
+    // put your code here (you can delete this sample code)
 
 
 
-            stage.update(); // this is needed to show any changes
+    var intro = new Rectangle({
+        width:stageW-200,
+        height:stageH-150,
+        color:red,
+        // corner:28,
+    }).center();
 
-        }); // end of ready
+    bg.centerReg(intro).sca(.25);
 
-    </script>
 
-    <meta name="viewport" content="width=device-width, user-scalable=no" />
+    var sprite = new Sprite({
+        image:asset("penguin_1-01.png"),
+        cols:2,
+        rows:1,
+        count:2,
+    }).addTo().sca(.2).run({loop:true}).pos(200,400,BOTTOM,RIGHT); //animate inside of the run!!!
+
+    stage.update(); // this is needed to show any changes
+
+}); // end of ready
+
+</script>
+
+<meta name="viewport" content="width=device-width, user-scalable=no" />
 
 </head>
 
 <body>
-    <!-- canvas with id="myCanvas" is made by zim Frame -->
+<!-- canvas with id="myCanvas" is made by zim Frame -->
 </body>
-
 </html>
