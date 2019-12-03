@@ -44,10 +44,14 @@
 
             // put your code here (you can delete this sample code)
             let iceblockContainer = new Container(stageW, stageH).center()
+            let hiddenRect = new Rectangle({
+                width: stageW,
+                height: stageH,
+            }).center().alp(0.01)
             let stages = [
                 {
                     stage: 1,
-                    iceblocks: 6,
+                    iceblocks: 6
                 }
             ]
             let iceblocks = []
@@ -60,11 +64,11 @@
                 iceblocks[i].pos(x, y)
             }
             // zog(iceblocks)
-            let penguin = asset('penguin.png').sca(0.2).addTo().drag();
+            let penguin = asset('penguin.png').sca(0.2).centerReg().outline();
 
 
             Ticker.add(function () {
-                // MOVE APART ICEBERGS
+                // MOVE ICEBERGS APART - IF THEY OVERLAP
                 for (let i = 1; i < iceblocks.length; i++) {
                     for (let j = i; j < iceblocks.length; j++) {
                         if (iceblocks[i].hitTestBounds(iceblocks[j])) {
@@ -76,15 +80,20 @@
                     }
                 }
 
+                // MOVE PENGUIN TO NEW X Y POSITION
+                hiddenRect.on('click', function (e) {
+                    penguin.animate({
+                        props: {
+                            x: frame.mouseX,
+                            y: frame.mouseY - 60
+                        },
+                        time: 500,
+                        // ease: 'bounceOut'
+                    })
+                })
             })
 
-            // new Tile({
-            //     obj: series(asset('iceblock-1.png'), asset('iceblock-2.png'), asset('iceblock-3.png'), asset('iceblock-4.png')),
-            //     col: 2,
-            //     rows: 2,
-            //     spacingH: 20,
-            //     spacingV: 20
-            // }).center()
+
 
 
             stage.update(); // this is needed to show any changes
