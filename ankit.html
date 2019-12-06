@@ -48,7 +48,8 @@
 			'number7.png',
 			'number8.png',
 			'number9.png',
-			'penguin.png'
+			'penguin.png',
+			'fish.png'
 		]
 		const path = 'assets/'
 		const frame = new Frame(
@@ -73,26 +74,30 @@
 			// see https://zimjs.com/bits.html for 64 Interactive Media techniques
 
 			// put your code here (you can delete this sample code)
-			let scoreContainer = new Container(stageW, 200)
+			let scoreContainer = new Container(stageW, 120)
 				.center()
 				.pos(0, 0)
+			new Rectangle({
+				width: stageW,
+				height: 120,
+				color: '#0d1d1c'
+			}).addTo(scoreContainer).bot()
 			let fishCont = new Rectangle({
 				width: 150,
 				height: 60,
 				color: 'rgba(0,0,0,0)'
 			}).addTo(scoreContainer)
 				.pos(40, 0)
+			asset('fish.png').addTo(fishCont).sca(0.3).pos(0, 30)
 			let fish = new Label({
 				text: 0,
-				size: 20,
-				align: 'right',
-				color: black
-			}).addTo(fishCont)
-			let maxFish = new Label({
-				text: 0,
-				size: 20,
-				align: 'right',
-			}).addTo(fishCont).pos(30, null)
+				size: 40,
+				align: 'center',
+				color: white
+			}).addTo(fishCont).pos(70, 43)
+
+
+
 
 
 			// Generate 5 random numbers and iceblocks in between 0 to 9
@@ -105,7 +110,6 @@
 				}
 				numCollection.push(newNumObj)
 			}
-			maxFish.text = numCollection.length * 150 // MAX SCORE A PLAYER CAN GET
 
 			let iceblockContainer = new Container(stageW, stageH).center()
 			let hiddenRect = new Rectangle({
@@ -174,6 +178,7 @@
 					call: score
 				})
 			})
+			let isAllVisited = false
 			let fishCount = 0
 			let preValue = 0
 			function score() {
@@ -199,6 +204,8 @@
 							iceblocks.indexOf(ice).penVisited = true
 						}
 
+						// ice.penVisited == true ? isAllVisited = true : isAllVisited = false
+
 						zog('pre ' + preValue)
 
 						zog('ice value ' + ice.penValue)
@@ -206,6 +213,51 @@
 				}
 				// iceblocks[i].hitTestBounds(iceblocks[j])
 			}
+
+
+			// ============================= GAME OVER
+			// ============================= TIMER
+			let timeLimit = 10
+			let timer = new Label({
+				text: timeLimit,
+				size: 40,
+				align: 'center',
+				color: white
+			}).centerReg(scoreContainer)
+			interval(1000, function () {
+				timeLimit--
+				timer.text = timeLimit;
+				zog(isAllVisited);
+				(timeLimit == 0 && isAllVisited != true) ? gameOver() : null;
+			}, 10);
+
+			let gameEndsCont = new Container(stageW, stageH).center()
+			gameEndsCont.y = -stageH
+			let endsBg = new Rectangle({
+				width: 600,
+				height: 400,
+				color: '#fff',
+				corner: 30,
+				borderColor: '#212121',
+				borderWidth: 10
+			}).centerReg(gameEndsCont)
+			new Label({
+				text: 'GAME OVER!',
+				size: 80,
+				align: 'center',
+				color: '#212121'
+			}).centerReg(endsBg).pos(null, 120, null, true)
+			asset('penguin.png').clone().centerReg(endsBg).pos(null, 20)
+			function gameOver() {
+				gameEndsCont.animate({
+					props: {
+						y: 0
+					},
+					time: 400,
+				})
+			}
+			// ==================
+
 
 			stage.update() // this is needed to show any changes
 		}) // end of ready
