@@ -27,7 +27,7 @@ const width = 1024;
 const height = 768;
 const color = light; // ZIM colors like green, blue, pink, faint, clear, etc.
 const outerColor = dark; // any HTML colors like "violet", "#333", etc. are fine to use
-const assets = ["mom.png", "heart.png", "introback.png", "penguin_1-01.png"];
+const assets = ["homeice.png", "igloo.png","mom.png", "baby.png", "introback.png", "penguin_1-01.png", "heart.png"];
 const path = "assets/";
 
 const frame = new Frame(scaling, width, height, color, outerColor, assets, path);
@@ -41,6 +41,8 @@ frame.on("ready", () => { // ES6 Arrow Function - like function(){}
     var mom = frame.asset("mom.png");
     var heart = frame.asset("heart.png");
     var bg = frame.asset("introback.png");
+    var homeice = frame.asset("homeice.png");
+    var igloo = frame.asset("igloo.png");
 
     // see https://zimjs.com/learn.html for video and code tutorials
     // see https://zimjs.com/docs.html for documentation
@@ -95,8 +97,13 @@ frame.on("ready", () => { // ES6 Arrow Function - like function(){}
 
 
     var winBox = new Container(stageW, stageH, ).center();
-    new Rectangle(500,500, red).center(winBox);
-    sprite1.center(winBox);
+    new Rectangle(900,500, red).center(winBox);
+    homeice.sca(1.4).center(winBox).mov(0,150);
+    igloo.sca(.9).center(winBox);
+    mom.sca(.2).center(winBox);
+    sprite1.sca(.15).center(winBox).mov(160,0);
+    heart.center(winBox);
+    
 
 
 
