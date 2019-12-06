@@ -50,22 +50,24 @@ frame.on("ready", () => { // ES6 Arrow Function - like function(){}
 
 
 
+    //Intro Box
+    var introBox = new Container(stageW, stageH).center();
+
     var intro = new Rectangle({
         width:stageW-200,
         height:stageH-150,
         color:red,
         // corner:28,
-    }).center();
+    }).center(introBox);
 
     bg.centerReg(intro).sca(.25);
 
-
-    var sprite = new Sprite({
+    var sprite1 = new Sprite({
         image:asset("penguin_1-01.png"),
         cols:2,
         rows:1,
         count:2,
-    }).addTo().sca(.3).run({loop:true}).pos(150,400,BOTTOM,RIGHT); //animate inside of the run!!!
+    }).addTo(intro).sca(.3).run({loop:true}).pos(150,400,BOTTOM,RIGHT); //animate inside of the run!!!
 
     mom.sca(.15).pos(675,50,TOP,RIGHT);
     heart.centerReg().sca(.3)
@@ -90,6 +92,11 @@ frame.on("ready", () => { // ES6 Arrow Function - like function(){}
               props:{alpha:.4},
               wait:2000
           });
+
+
+    var winBox = new Container(stageW, stageH, ).center();
+    new Rectangle(500,500, red).center(winBox);
+    sprite1.center(winBox);
 
 
 
