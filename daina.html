@@ -27,7 +27,7 @@ const width = 1024;
 const height = 768;
 const color = light; // ZIM colors like green, blue, pink, faint, clear, etc.
 const outerColor = dark; // any HTML colors like "violet", "#333", etc. are fine to use
-const assets = ["mom.png", "baby.png", "introback.png", "penguin_1-01.png"];
+const assets = ["mom.png", "heart.png", "introback.png", "penguin_1-01.png"];
 const path = "assets/";
 
 const frame = new Frame(scaling, width, height, color, outerColor, assets, path);
@@ -38,8 +38,8 @@ frame.on("ready", () => { // ES6 Arrow Function - like function(){}
     let stageW = frame.width;
     let stageH = frame.height;
 
-    // var mom = frame.asset("mom.png");
-    // var baby = frame.asset("baby.png");
+    var mom = frame.asset("mom.png");
+    var heart = frame.asset("heart.png");
     var bg = frame.asset("introback.png");
 
     // see https://zimjs.com/learn.html for video and code tutorials
@@ -65,7 +65,33 @@ frame.on("ready", () => { // ES6 Arrow Function - like function(){}
         cols:2,
         rows:1,
         count:2,
-    }).addTo().sca(.2).run({loop:true}).pos(200,400,BOTTOM,RIGHT); //animate inside of the run!!!
+    }).addTo().sca(.3).run({loop:true}).pos(150,400,BOTTOM,RIGHT); //animate inside of the run!!!
+
+    mom.sca(.15).pos(675,50,TOP,RIGHT);
+    heart.centerReg().sca(.3)
+          .pos(680,70,TOP,RIGHT)
+          .wiggle("rotation", 45, 20, 25, 600, 700)
+          .outline();
+          // .wiggle("scale", 2,.1, .2, 300, 1000)
+          // .animate({
+          //   rotation:10,
+          //   rewind:true,
+          //   loop:true,
+          // });
+
+          var title = new Label({
+              text:"CupeShoot",
+              size:40,
+              font:"impact",
+              color:white,
+              backgroundColor:red,
+              shiftVertical:4
+          }).pos(30,30).ske(10).animate({
+              props:{alpha:.4},
+              wait:2000
+          });
+
+
 
     stage.update(); // this is needed to show any changes
 
