@@ -85,12 +85,14 @@
 			let fish = new Label({
 				text: 0,
 				size: 20,
+				align: 'right',
 				color: black
 			}).addTo(fishCont)
 			let maxFish = new Label({
 				text: 0,
 				size: 20,
-			}).addTo(fishCont).pos(20, null)
+				align: 'right',
+			}).addTo(fishCont).pos(30, null)
 
 
 			// Generate 5 random numbers and iceblocks in between 0 to 9
@@ -103,7 +105,7 @@
 				}
 				numCollection.push(newNumObj)
 			}
-			zog(numCollection)
+			maxFish.text = numCollection.length * 150 // MAX SCORE A PLAYER CAN GET
 
 			let iceblockContainer = new Container(stageW, stageH).center()
 			let hiddenRect = new Rectangle({
