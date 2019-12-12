@@ -1,273 +1,371 @@
 <!DOCTYPE html>
 <html>
+	<head>
+		<meta charset="utf-8" />
+		<title>ZIM - Code Creativity</title>
 
-<head>
-	<meta charset="utf-8" />
-	<title>ZIM - Code Creativity</title>
+		<!-- Welcome to ZIM at https://zimjs.com - Code Creativity!                              -->
+		<!-- ZIM runs on the HTML Canvas powered by JavaScript and CreateJS https://createjs.com -->
+		<!-- Founded by Inventor Dan Zen - http://danzen.com - Canadian New Media Award Winner   -->
+		<!-- ZIM is free to use. You can donate to help improve ZIM at https://zimjs.com/donate  -->
 
-	<!-- Welcome to ZIM at https://zimjs.com - Code Creativity!                              -->
-	<!-- ZIM runs on the HTML Canvas powered by JavaScript and CreateJS https://createjs.com -->
-	<!-- Founded by Inventor Dan Zen - http://danzen.com - Canadian New Media Award Winner   -->
-	<!-- ZIM is free to use. You can donate to help improve ZIM at https://zimjs.com/donate  -->
+		<script src="https://zimjs.org/cdn/1.2.3/createjs_min.js"></script>
+		<script src="https://zimjs.org/cdn/10.6.1/zim.js"></script>
+		<!-- use zimjs.com/distill for minified individual functions! -->
 
-	<script src="https://zimjs.org/cdn/1.2.3/createjs_min.js"></script>
-	<script src="https://zimjs.org/cdn/10.6.1/zim.js"></script>
-	<!-- use zimjs.com/distill for minified individual functions! -->
+		<script>
+			// SCALING OPTIONS
+			// scaling can have values as follows with full being the default
+			// "fit"	sets canvas and stage to dimensions and scales to fit inside window size
+			// "outside"	sets canvas and stage to dimensions and scales to fit outside window size
+			// "full"	sets stage to window size with no scaling
+			// "tagID"	add canvas to HTML tag of ID - set to dimensions if provided - no scaling
 
-	<script>
-		// SCALING OPTIONS
-		// scaling can have values as follows with full being the default
-		// "fit"	sets canvas and stage to dimensions and scales to fit inside window size
-		// "outside"	sets canvas and stage to dimensions and scales to fit outside window size
-		// "full"	sets stage to window size with no scaling
-		// "tagID"	add canvas to HTML tag of ID - set to dimensions if provided - no scaling
+			const scaling = 'fit' // this will resize to fit inside the screen dimensions
+			const width = 1024
+			const height = 1024
+			const color = '#B2E0DE' // ZIM colors like green, blue, pink, faint, clear, etc.
+			const outerColor = '#B2E0DE' // any HTML colors like "violet", "#333", etc. are fine to use
+			const assets = [
+				'iceblock-0.png',
+				'iceblock-1.png',
+				'iceblock-2.png',
+				'iceblock-3.png',
+				'iceblock-4.png',
+				'iceblock-5.png',
+				'iceblock-6.png',
+				'iceblock-7.png',
+				'iceblock-8.png',
+				'iceblock-9.png',
+				'number0.png',
+				'number1.png',
+				'number2.png',
+				'number3.png',
+				'number4.png',
+				'number5.png',
+				'number6.png',
+				'number7.png',
+				'number8.png',
+				'number9.png',
+				'penguin.png',
+				'fish.png'
+			]
+			const path = 'assets/'
+			const frame = new Frame(
+				scaling,
+				width,
+				height,
+				color,
+				outerColor,
+				assets,
+				path
+			)
+			frame.on('ready', () => {
+				// ES6 Arrow Function - like function(){}
+				zog('ready from ZIM Frame') // logs in console (F12 - choose console)
 
-		const scaling = 'fit' // this will resize to fit inside the screen dimensions
-		const width = 1024
-		const height = 1024
-		const color = '#B2E0DE' // ZIM colors like green, blue, pink, faint, clear, etc.
-		const outerColor = '#B2E0DE' // any HTML colors like "violet", "#333", etc. are fine to use
-		const assets = [
-			'iceblock-0.png',
-			'iceblock-1.png',
-			'iceblock-2.png',
-			'iceblock-3.png',
-			'iceblock-4.png',
-			'iceblock-5.png',
-			'iceblock-6.png',
-			'iceblock-7.png',
-			'iceblock-8.png',
-			'iceblock-9.png',
-			'number0.png',
-			'number1.png',
-			'number2.png',
-			'number3.png',
-			'number4.png',
-			'number5.png',
-			'number6.png',
-			'number7.png',
-			'number8.png',
-			'number9.png',
-			'penguin.png',
-			'fish.png'
-		]
-		const path = 'assets/'
-		const frame = new Frame(
-			scaling,
-			width,
-			height,
-			color,
-			outerColor,
-			assets,
-			path
-		)
-		frame.on('ready', () => {
-			// ES6 Arrow Function - like function(){}
-			zog('ready from ZIM Frame') // logs in console (F12 - choose console)
+				const stage = frame.stage
+				let stageW = frame.width
+				let stageH = frame.height
 
-			const stage = frame.stage
-			let stageW = frame.width
-			let stageH = frame.height
+				// see https://zimjs.com/learn.html for video and code tutorials
+				// see https://zimjs.com/docs.html for documentation
+				// see https://zimjs.com/bits.html for 64 Interactive Media techniques
 
-			// see https://zimjs.com/learn.html for video and code tutorials
-			// see https://zimjs.com/docs.html for documentation
-			// see https://zimjs.com/bits.html for 64 Interactive Media techniques
+				// put your code here (you can delete this sample code)
 
-			// put your code here (you can delete this sample code)
-			let scoreContainer = new Container(stageW, 120)
-				.center()
-				.pos(0, 0)
-			new Rectangle({
-				width: stageW,
-				height: 120,
-				color: '#0d1d1c'
-			}).addTo(scoreContainer).bot()
-			let fishCont = new Rectangle({
-				width: 150,
-				height: 60,
-				color: 'rgba(0,0,0,0)'
-			}).addTo(scoreContainer)
-				.pos(40, 0)
-			asset('fish.png').addTo(fishCont).sca(0.3).pos(0, 30)
-			let fish = new Label({
-				text: 0,
-				size: 40,
-				align: 'center',
-				color: white
-			}).addTo(fishCont).pos(70, 43)
+				let gamePlay = new Container(stageW, stageH).center()
+				let scoreContainer = new Container(stageW, 120)
+					.center(gamePlay)
+					.pos(0, 0)
 
+				new Rectangle({
+					width: stageW,
+					height: 120,
+					color: '#0d1d1c'
+				})
+					.addTo(scoreContainer)
+					.bot()
 
-
-
-
-			// Generate 5 random numbers and iceblocks in between 0 to 9
-			let numCollection = []
-			for (let i = 0; i < 5; i++) {
-				let ranVal = rand(0, 9, true)
-				let newNumObj = {
-					value: ranVal,
-					asset: asset('number' + ranVal + '.png').clone()
-				}
-				numCollection.push(newNumObj)
-			}
-
-			let iceblockContainer = new Container(stageW, stageH).center()
-			let hiddenRect = new Rectangle({
-				width: stageW,
-				height: stageH
-			})
-				.center()
-				.alp(0.01)
-
-			let iceblocks = []
-			// asset('iceblock-1.png').center()
-			for (let i = 0; i < numCollection.length; i++) {
-				let ice = asset('iceblock-' + i + '.png')
-				let num = numCollection[i].asset
-				iceblocks[i] = new Rectangle({
-					width: ice.width,
-					height: ice.height,
+				let fishCont = new Rectangle({
+					width: 150,
+					height: 60,
 					color: 'rgba(0,0,0,0)'
 				})
-				ice.centerReg(iceblocks[i])
-				num.sca(0.15)
-					.centerReg(iceblocks[i])
-					.pos(null, 30, null, true)
-				iceblocks[i].penValue = numCollection[i].value // adding a custom property so that real value can be derived while doing hittest
-				iceblocks[i].penVisited = false // another custom prop so that we don't repeat hittest on already visited iceblocks
+					.addTo(scoreContainer)
+					.pos(40, 0)
+				asset('fish.png')
+					.addTo(fishCont)
+					.sca(0.3)
+					.pos(0, 30)
 
-				iceblocks[i].centerReg().overCursor = 'pointer'
+				let fish = new Label({
+					text: 0,
+					size: 40,
+					align: 'center',
+					color: white
+				})
+					.addTo(fishCont)
+					.pos(70, 43)
 
-				let x = rand(0, stageW - iceblocks[i].width)
-				let y = rand(stageH - iceblocks[i].height, 0)
-				iceblocks[i].pos(x, y)
-			}
-			// zog(iceblocks)
-			let penguin = new Rectangle({
-				width: 60,
-				height: 35,
-				color: 'rgba(0,0,0,0)'
-			}).centerReg()
-			asset('penguin.png')
-				.sca(0.2)
-				.centerReg(penguin).pos(null, -10, null, true)
+				let iceblockContainer = new Container(stageW, stageH).center(
+					gamePlay
+				)
+				let hiddenRect = new Rectangle({
+					width: stageW,
+					height: stageH
+				})
+					.center()
+					.alp(0.01)
+				// ========= TIMER CONTAINER
+				let timeLimit = 50
+				let timer = new Label({
+					text: timeLimit,
+					size: 40,
+					align: 'center',
+					color: white
+				}).centerReg(scoreContainer)
 
-			Ticker.add(function () {
-				// MOVE ICEBERGS APART - IF THEY OVERLAP
-				for (let i = 0; i < iceblocks.length; i++) {
-					for (let j = i; j < iceblocks.length; j++) {
-						if (iceblocks[i].hitTestBounds(iceblocks[j])) {
-							iceblocks[i].x++
-							iceblocks[i].y++
-							iceblocks[j].x--
-							iceblocks[j].y--
+				let fishEmitter = new Emitter({
+					obj: [asset('fish.png')],
+					startPaused: true,
+					num: 1,
+					life: 1000,
+					gravity: 0,
+					sink: fish,
+					sinkForce: 120,
+					pool: true
+				})
+
+				// ============================== PLAY GAME
+				let play = function() {
+					// RESET SCORE
+					timeLimit = 50
+					fish.text = 0
+					timer.text = timeLimit
+
+					// Generate 5 random numbers and iceblocks between 0 to 9
+					let numCollection = []
+					for (let i = 0; i < 5; i++) {
+						let ranVal = rand(0, 9, true)
+						let newNumObj = {
+							value: ranVal,
+							asset: asset('number' + ranVal + '.png').clone()
+						}
+						numCollection.push(newNumObj)
+					}
+
+					let iceblocks = []
+					// zog(numCollection.length)
+					// asset('iceblock-1.png').center()
+					for (let i = 0; i < numCollection.length; i++) {
+						let ice = asset('iceblock-' + i + '.png')
+						let num = numCollection[i].asset
+
+						iceblocks[i] = new Rectangle({
+							width: ice.width,
+							height: ice.height,
+							color: 'rgba(0,0,0,0)'
+						})
+
+						ice.centerReg(iceblocks[i])
+
+						num.sca(0.15)
+							.centerReg(iceblocks[i])
+							.pos(null, 30, null, true)
+						// .outline()
+
+						iceblocks[i].penValue = numCollection[i].value // adding a custom property so that real value can be derived while doing hittest
+						iceblocks[i].penVisited = false // another custom prop so that we don't repeat hittest on already visited iceblocks
+						iceblocks[i].centerReg(iceblockContainer).overCursor =
+							'pointer'
+
+						let x = rand(0, stageW - iceblocks[i].width)
+						let y = rand(stageH - iceblocks[i].height, 0)
+						iceblocks[i].pos(x, y)
+					}
+					// zog(iceblocks)
+
+					// ===== PENGUIN
+					let penguin = new Rectangle({
+						width: 60,
+						height: 35,
+						color: 'rgba(0,0,0,0)'
+					}).centerReg(gamePlay)
+					asset('penguin.png')
+						.sca(0.2)
+						.centerReg(penguin)
+						.pos(null, -10, null, true)
+
+					fishEmitter.centerReg(penguin)
+
+					// MOVE ICEBLOCKS
+					Ticker.add(function() {
+						// MOVE ICEBERGS APART - IF THEY OVERLAP
+						for (let i = 0; i < iceblocks.length; i++) {
+							for (let j = i; j < iceblocks.length; j++) {
+								if (iceblocks[i].hitTestBounds(iceblocks[j])) {
+									iceblocks[i].x++
+									iceblocks[i].y++
+									iceblocks[j].x--
+									iceblocks[j].y--
+								}
+							}
+						}
+					})
+
+					// MOVE PENGUIN TO NEW X Y POSITION
+					// AND CALL FOR HITTEST
+					hiddenRect.on('click', function(e) {
+						penguin.animate({
+							props: {
+								x: frame.mouseX,
+								y: frame.mouseY - 0
+							},
+							time: 500,
+							call: score
+						})
+					})
+					let isAllVisited = false
+					let fishCount = 0
+					let preValue = 0
+					function score() {
+						for (let ice of iceblocks) {
+							if (ice.hitTestBounds(penguin)) {
+								if (
+									ice.penValue >= preValue &&
+									ice.penVisited != true
+								) {
+									fishCount += 150
+									fish.text = fishCount
+									preValue = ice.penValue
+									ice.penVisited = true
+									iceblocks.indexOf(ice).penVisited = true
+									fishAnim()
+								} else if (
+									ice.penValue <= preValue &&
+									ice.penVisited != true
+								) {
+									fishCount -= 50
+									fish.text = fishCount
+									preValue = ice.penValue
+									ice.penVisited = true
+									iceblocks.indexOf(ice).penVisited = true
+								}
+
+								// ice.penVisited == true ? isAllVisited = true : isAllVisited = false
+
+								zog('pre ' + preValue)
+
+								zog('ice value ' + ice.penValue)
+							}
+						}
+						// ANIMATE SCORE WITH FISH
+						function fishAnim() {
+							console.log('animating fish')
+							fishEmitter.spurt()
+							interval(1000, function() {
+								fishEmitter.pauseEmitter()
+							})
 						}
 					}
+
+					// TIMER
+					interval(
+						1000,
+						function() {
+							timeLimit--
+							timer.text = timeLimit
+							zog(isAllVisited)
+							timeLimit == 0 && isAllVisited != true
+								? gameOver()
+								: null
+						},
+						timeLimit
+					)
 				}
-			})
 
-			// MOVE PENGUIN TO NEW X Y POSITION
-			// AND CALL FOR HITTEST
-			hiddenRect.on('click', function (e) {
-				penguin.animate({
-					props: {
-						x: frame.mouseX,
-						y: frame.mouseY - 0
-					},
-					time: 500,
-					call: score
+				play()
+
+				// ============================= GAME OVER
+				let gameEndsCont = new Container(stageW, stageH).center()
+				gameEndsCont.y = -stageH
+				let endsBg = new Rectangle({
+					width: 600,
+					height: 400,
+					color: '#fff',
+					corner: 30,
+					borderColor: '#212121',
+					borderWidth: 10
+				}).centerReg(gameEndsCont)
+				new Label({
+					text: 'GAME OVER!',
+					size: 80,
+					align: 'center',
+					color: '#212121'
 				})
-			})
-			let isAllVisited = false
-			let fishCount = 0
-			let preValue = 0
-			function score() {
-				for (let ice of iceblocks) {
-					if (ice.hitTestBounds(penguin)) {
-						if (
-							ice.penValue >= preValue &&
-							ice.penVisited != true
-						) {
-							fishCount += 150
-							fish.text = fishCount
-							preValue = ice.penValue
-							ice.penVisited = true
-							iceblocks.indexOf(ice).penVisited = true
-						} else if (
-							ice.penValue <= preValue &&
-							ice.penVisited != true
-						) {
-							fishCount -= 50
-							fish.text = fishCount
-							preValue = ice.penValue
-							ice.penVisited = true
-							iceblocks.indexOf(ice).penVisited = true
-						}
+					.centerReg(endsBg)
+					.pos(null, 120, null, true)
+				asset('penguin.png')
+					.clone()
+					.centerReg(endsBg)
+					.pos(null, 20)
 
-						// ice.penVisited == true ? isAllVisited = true : isAllVisited = false
+				// PLAY AGAIN
+				let playAgain = new Button({
+					width: 300,
+					height: 80,
+					label: 'Play again'
+				})
+					.centerReg(gameEndsCont)
+					.pos(null, 20, false, true)
+					.top()
+					.tap(function() {
+						zog('play again')
+						gamePlay.animate({
+							props: {
+								y: 0
+							},
+							time: 400
+						})
 
-						zog('pre ' + preValue)
+						gameEndsCont.animate({
+							props: {
+								y: -stageH
+							},
+							time: 200
+						})
+						play()
+					})
 
-						zog('ice value ' + ice.penValue)
-					}
+				// GAME OVER FN
+				function gameOver() {
+					// remove gameplay area
+					gamePlay.animate({
+						props: {
+							y: stageH + 400
+						},
+						time: 400
+					})
+
+					gameEndsCont.animate({
+						props: {
+							y: 0
+						},
+						time: 200
+					})
 				}
-				// iceblocks[i].hitTestBounds(iceblocks[j])
-			}
 
+				// ==================
 
-			// ============================= GAME OVER
-			// ============================= TIMER
-			let timeLimit = 10
-			let timer = new Label({
-				text: timeLimit,
-				size: 40,
-				align: 'center',
-				color: white
-			}).centerReg(scoreContainer)
-			interval(1000, function () {
-				timeLimit--
-				timer.text = timeLimit;
-				zog(isAllVisited);
-				(timeLimit == 0 && isAllVisited != true) ? gameOver() : null;
-			}, 10);
+				stage.update() // this is needed to show any changes
+			}) // end of ready
+		</script>
 
-			let gameEndsCont = new Container(stageW, stageH).center()
-			gameEndsCont.y = -stageH
-			let endsBg = new Rectangle({
-				width: 600,
-				height: 400,
-				color: '#fff',
-				corner: 30,
-				borderColor: '#212121',
-				borderWidth: 10
-			}).centerReg(gameEndsCont)
-			new Label({
-				text: 'GAME OVER!',
-				size: 80,
-				align: 'center',
-				color: '#212121'
-			}).centerReg(endsBg).pos(null, 120, null, true)
-			asset('penguin.png').clone().centerReg(endsBg).pos(null, 20)
-			function gameOver() {
-				gameEndsCont.animate({
-					props: {
-						y: 0
-					},
-					time: 400,
-				})
-			}
-			// ==================
+		<meta name="viewport" content="width=device-width, user-scalable=no" />
+	</head>
 
-
-			stage.update() // this is needed to show any changes
-		}) // end of ready
-	</script>
-
-	<meta name="viewport" content="width=device-width, user-scalable=no" />
-</head>
-
-<body>
-	<!-- canvas with id="myCanvas" is made by zim Frame -->
-</body>
-
+	<body>
+		<!-- canvas with id="myCanvas" is made by zim Frame -->
+	</body>
 </html>
