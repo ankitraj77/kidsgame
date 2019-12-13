@@ -120,9 +120,9 @@
 				.addTo(fishCont)
 				.pos(70, 43)
 
-			let iceblockContainer = new Container(stageW, stageH).center(
+			let iceblockContainer = new Container(stageW, stageH - 240).center(
 				gamePlay
-			)
+			).pos(null, 120).outline()
 			let hiddenRect = new Rectangle({
 				width: stageW,
 				height: stageH
@@ -155,6 +155,7 @@
 				timeLimit = 50
 				fish.text = 0
 				timer.text = timeLimit
+				let margin = 100
 
 				// Generate 5 random numbers and iceblocks between 0 to 9
 				let numCollection = []
@@ -192,8 +193,8 @@
 					iceblocks[i].centerReg(iceblockContainer).overCursor =
 						'pointer'
 
-					let x = rand(0, stageW - iceblocks[i].width)
-					let y = rand(stageH - iceblocks[i].height, 0)
+					let x = rand(margin, stageW - iceblocks[i].width)
+					let y = rand(stageH - iceblocks[i].height - margin, margin)
 					iceblocks[i].pos(x, y)
 				}
 				// zog(iceblocks)
@@ -239,6 +240,7 @@
 					})
 				})
 				let isAllVisited = false
+				let totalVisits = 0
 				let fishCount = 0
 				let preValue = 0
 				function score() {
@@ -253,6 +255,7 @@
 								preValue = ice.penValue
 								ice.penVisited = true
 								iceblocks.indexOf(ice).penVisited = true
+								totalVisits++
 								fishAnim()
 							} else if (
 								ice.penValue <= preValue &&
@@ -263,10 +266,11 @@
 								preValue = ice.penValue
 								ice.penVisited = true
 								iceblocks.indexOf(ice).penVisited = true
+								totalVisits++
 							}
 
-							// ice.penVisited == true ? isAllVisited = true : isAllVisited = false
-
+							totalVisits == iceblocks.length ? isAllVisited = true : null
+							zog(totalVisits)
 							zog('pre ' + preValue)
 
 							zog('ice value ' + ice.penValue)
@@ -289,14 +293,18 @@
 						timeLimit--
 						timer.text = timeLimit
 						zog(isAllVisited)
-						timeLimit == 0 && isAllVisited != true
+						// GAME OVER WHEN TIME RUNS OUT
+						// AND ALL OF THE ICE-BLOCKS ARE NOT VISITED
+						timeLimit == 0 //&& isAllVisited != true
 							? gameOver()
 							: null
+
+						isAllVisited == true ? win() : null
+
 					},
 					timeLimit
 				)
 			}
-
 			play()
 
 			// ============================= GAME OVER
@@ -366,6 +374,10 @@
 					},
 					time: 200
 				})
+			}
+			// GAME WIN
+			function win() {
+				zog("You won")
 			}
 
 			// ==================
