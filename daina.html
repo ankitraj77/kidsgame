@@ -27,7 +27,7 @@ const width = 1024;
 const height = 768;
 const color = light; // ZIM colors like green, blue, pink, faint, clear, etc.
 const outerColor = dark; // any HTML colors like "violet", "#333", etc. are fine to use
-const assets = ["iceblock1.png", "penguinfall.png", "homeice.png", "igloo.png","mom.png", "introback.png", "penguin_1-01.png", "heart.png", "background-02.png",{font:"kidspace", src:"Kidspace-DEMO.otf"}];
+const assets = ["music.mp3", "yaysfx.mp3", "uhohsfx.mp3", "iceblock1.png", "penguinfall.png", "homeice.png", "igloo.png","mom.png", "introback.png", "penguin_1-01.png", "heart.png", "background-02.png",{font:"kidspace", src:"Kidspace-DEMO.otf"}];
 const path = "assets/";
 
 const frame = new Frame(scaling, width, height, color, outerColor, assets, path);
@@ -89,7 +89,7 @@ frame.on("ready", () => { // ES6 Arrow Function - like function(){}
           text:"Take Me Home",
           size:70,
           font:"kidspace",
-          color:red,
+          color:'#0d1d1c',
           // backgroundColor:red,
           shiftVertical:4
       }).addTo(introBox).pos(50,150).ske(10).animate({
@@ -113,8 +113,8 @@ frame.on("ready", () => { // ES6 Arrow Function - like function(){}
       });
 
       var start = new Button({
-              backgroundColor: red,
-              rollBackgroundColor: red,
+              backgroundColor: '#0d1d1c',
+              rollBackgroundColor: '#0d1d1c',
               label: "PLAY",
               color: white
           }).sca(1)
@@ -128,6 +128,7 @@ frame.on("ready", () => { // ES6 Arrow Function - like function(){}
                     alpha:0,
                     call:play
                 }, 600);
+                // asset("music.mp3").play();
 
           });
 
@@ -136,9 +137,12 @@ frame.on("ready", () => { // ES6 Arrow Function - like function(){}
     function play(){
       zog("play");
     };
-    introFunction();
+    // introFunction();
+
+
 
     var winFunction = function(){
+      // asset("yaysfx.mp3").play();
       var winBox = new Container(stageW, stageH).center();
       new Rectangle(900,500, blue).center(winBox);
       bg1.sca(.3).center(winBox);
@@ -156,7 +160,7 @@ frame.on("ready", () => { // ES6 Arrow Function - like function(){}
           text:"Yay! Home safe!",
           size:40,
           font:"kidspace",
-          color:red,
+          color:'#0d1d1c',
           // backgroundColor:red,
           // shiftVertical:4
       }).pos(350,150).ske(10).animate({
@@ -173,10 +177,11 @@ frame.on("ready", () => { // ES6 Arrow Function - like function(){}
       });
     };
 
-    // winFunction();
+    winFunction();
 
 
     var loseFunction = function(){
+        // asset("uhohsfx.mp3").play();
         var loseBox = new Container (stageW, stageH).center();
         new Rectangle(stageW,stageH, blue).center(loseBox);
         bg1.sca(.3).center(loseBox);
@@ -197,7 +202,7 @@ frame.on("ready", () => { // ES6 Arrow Function - like function(){}
             text:"Oh no! Almost there, try again.",
             size:40,
             font:"kidspace",
-            color:red,
+            color:'#0d1d1c',
             // backgroundColor:red,
             // shiftVertical:4
         }).pos(200,150).ske(10).animate({
