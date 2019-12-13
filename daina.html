@@ -47,6 +47,9 @@ frame.on("ready", () => { // ES6 Arrow Function - like function(){}
     var penguinfall = frame.asset("penguinfall.png");
     var iceblock1 = frame.asset("iceblock1.png");
 
+    var background = asset("background-02.png").addTo().sca(.3);
+
+
     // see https://zimjs.com/learn.html for video and code tutorials
     // see https://zimjs.com/docs.html for documentation
     // see https://zimjs.com/bits.html for 64 Interactive Media techniques
@@ -67,19 +70,19 @@ frame.on("ready", () => { // ES6 Arrow Function - like function(){}
       var introBox = new Container(stageW, stageH).center();
 
       var intro = new Rectangle({
-          width:stageW-200,
-          height:stageH-150,
+          width:stageW,
+          height:stageH,
           color:red,
           // corner:28,
       }).center(introBox);
 
-      bg.centerReg(intro).sca(.25);
+      bg.centerReg(intro).sca(.35);
 
-      sprite1.addTo(intro).sca(.3).run({loop:true}).pos(50,350,BOTTOM,RIGHT); //animate inside of the run!!!
+      sprite1.addTo(intro).sca(.3).run({loop:true}).pos(50,530,BOTTOM,RIGHT); //animate inside of the run!!!
 
-      mom.addTo(introBox).sca(.15).pos(675,50,TOP,RIGHT);
+      mom.addTo(introBox).sca(.15).pos(875,-5,TOP,RIGHT);
       heart.addTo(introBox).centerReg().sca(.3)
-            .pos(680,70,TOP,RIGHT)
+            .pos(870,10,TOP,RIGHT)
             .wiggle("rotation", 45, 20, 25, 600, 700);
 
       var title = new Label({
@@ -89,18 +92,18 @@ frame.on("ready", () => { // ES6 Arrow Function - like function(){}
           color:red,
           // backgroundColor:red,
           shiftVertical:4
-      }).addTo(introBox).pos(150,150).ske(10).animate({
+      }).addTo(introBox).pos(50,150).ske(10).animate({
           // props:{alpha:.4},
           // wait:2000
       });
 
-      var instructionsBox = new Rectangle(300,230, white).addTo(introBox).pos(150,220,LEFT,TOP);
+      var instructionsBox = new Rectangle(480,150, white, null,null,30).addTo(introBox).pos(50,220,LEFT,TOP).alp(.8);
       var title = new Label({
-          text:"Help the penguin get home to mom \nCollect the numbers in increasing \norder on the way, and collect fish for \ndinner!",
+          text:"OH NO! Kyle the Penguin is stuck! \nHelp him get home & catch fish for dinner by hopping \non the icebergs from the lowest number to the \nhighest number. Good Luck!",
           font:"kidspace",
           size:15,
           color:black,
-          align:"center",
+          align:"left",
           // backgroundColor:red,
           lineHeight:30,
           shiftVertical:4
@@ -112,7 +115,7 @@ frame.on("ready", () => { // ES6 Arrow Function - like function(){}
       var start = new Button({
               backgroundColor: red,
               rollBackgroundColor: red,
-              label: "START",
+              label: "PLAY",
               color: white
           }).sca(1)
           .addTo(introBox)
@@ -133,7 +136,7 @@ frame.on("ready", () => { // ES6 Arrow Function - like function(){}
     function play(){
       zog("play");
     };
-    // introFunction();
+    introFunction();
 
     var winFunction = function(){
       var winBox = new Container(stageW, stageH).center();
@@ -156,13 +159,18 @@ frame.on("ready", () => { // ES6 Arrow Function - like function(){}
           color:red,
           // backgroundColor:red,
           // shiftVertical:4
-      }).pos(350,200).ske(10).animate({
+      }).pos(350,150).ske(10).animate({
         props:({y:-500}),
         time:1000,
         from:true,
       });
 
 
+      new Scroller({
+          backing:background,
+          speed:.5,
+          gapFix:1,
+      });
     };
 
     // winFunction();
@@ -192,14 +200,20 @@ frame.on("ready", () => { // ES6 Arrow Function - like function(){}
             color:red,
             // backgroundColor:red,
             // shiftVertical:4
-        }).pos(200,200).ske(10).animate({
+        }).pos(200,150).ske(10).animate({
           props:({y:-500}),
           time:1000,
           from:true,
         });
+
+        new Scroller({
+            backing:background,
+            speed:.5,
+            gapFix:1,
+        });
     };
 
-    loseFunction();
+    // loseFunction();
 
 
 
