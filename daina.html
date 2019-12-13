@@ -27,7 +27,7 @@ const width = 1024;
 const height = 768;
 const color = light; // ZIM colors like green, blue, pink, faint, clear, etc.
 const outerColor = dark; // any HTML colors like "violet", "#333", etc. are fine to use
-const assets = ["homeice.png", "igloo.png","mom.png", "baby.png", "introback.png", "penguin_1-01.png", "heart.png"];
+const assets = ["iceblock1.png", "penguinfall.png", "homeice.png", "igloo.png","mom.png", "introback.png", "penguin_1-01.png", "heart.png", "background-02.png",{font:"kidspace", src:"Kidspace-DEMO.otf"}];
 const path = "assets/";
 
 const frame = new Frame(scaling, width, height, color, outerColor, assets, path);
@@ -43,6 +43,9 @@ frame.on("ready", () => { // ES6 Arrow Function - like function(){}
     var bg = frame.asset("introback.png");
     var homeice = frame.asset("homeice.png");
     var igloo = frame.asset("igloo.png");
+    var bg1 = frame.asset("background-02.png");
+    var penguinfall = frame.asset("penguinfall.png");
+    var iceblock1 = frame.asset("iceblock1.png");
 
     // see https://zimjs.com/learn.html for video and code tutorials
     // see https://zimjs.com/docs.html for documentation
@@ -50,60 +53,153 @@ frame.on("ready", () => { // ES6 Arrow Function - like function(){}
 
     // put your code here (you can delete this sample code)
 
-
-
-    //Intro Box
-    var introBox = new Container(stageW, stageH).center();
-
-    var intro = new Rectangle({
-        width:stageW-200,
-        height:stageH-150,
-        color:red,
-        // corner:28,
-    }).center(introBox);
-
-    bg.centerReg(intro).sca(.25);
-
     var sprite1 = new Sprite({
         image:asset("penguin_1-01.png"),
         cols:2,
         rows:1,
         count:2,
-    }).addTo(intro).sca(.3).run({loop:true}).pos(150,400,BOTTOM,RIGHT); //animate inside of the run!!!
+    });
 
-    mom.sca(.15).pos(675,50,TOP,RIGHT);
-    heart.centerReg().sca(.3)
-          .pos(680,70,TOP,RIGHT)
-          .wiggle("rotation", 45, 20, 25, 600, 700)
-          .outline();
-          // .wiggle("scale", 2,.1, .2, 300, 1000)
-          // .animate({
-          //   rotation:10,
-          //   rewind:true,
-          //   loop:true,
-          // });
 
-          var title = new Label({
-              text:"CupeShoot",
-              size:40,
-              font:"impact",
-              color:white,
-              backgroundColor:red,
-              shiftVertical:4
-          }).pos(30,30).ske(10).animate({
-              props:{alpha:.4},
-              wait:2000
+
+    var introFunction = function(){
+      //Intro Box
+      var introBox = new Container(stageW, stageH).center();
+
+      var intro = new Rectangle({
+          width:stageW-200,
+          height:stageH-150,
+          color:red,
+          // corner:28,
+      }).center(introBox);
+
+      bg.centerReg(intro).sca(.25);
+
+      sprite1.addTo(intro).sca(.3).run({loop:true}).pos(50,350,BOTTOM,RIGHT); //animate inside of the run!!!
+
+      mom.addTo(introBox).sca(.15).pos(675,50,TOP,RIGHT);
+      heart.addTo(introBox).centerReg().sca(.3)
+            .pos(680,70,TOP,RIGHT)
+            .wiggle("rotation", 45, 20, 25, 600, 700);
+
+      var title = new Label({
+          text:"Take Me Home",
+          size:70,
+          font:"kidspace",
+          color:red,
+          // backgroundColor:red,
+          shiftVertical:4
+      }).addTo(introBox).pos(150,150).ske(10).animate({
+          // props:{alpha:.4},
+          // wait:2000
+      });
+
+      var instructionsBox = new Rectangle(300,230, white).addTo(introBox).pos(150,220,LEFT,TOP);
+      var title = new Label({
+          text:"Help the penguin get home to mom \nCollect the numbers in increasing \norder on the way, and collect fish for \ndinner!",
+          font:"kidspace",
+          size:15,
+          color:black,
+          align:"center",
+          // backgroundColor:red,
+          lineHeight:30,
+          shiftVertical:4
+      }).addTo(instructionsBox).pos(10,10).animate({
+          // props:{alpha:.4},
+          // wait:2000
+      });
+
+      var start = new Button({
+              backgroundColor: red,
+              rollBackgroundColor: red,
+              label: "START",
+              color: white
+          }).sca(1)
+          .addTo(introBox)
+          .centerReg()
+          .pos(250, 100, CENTER, BOTTOM, )
+          .tap(function() {
+            introBox
+                .cache()
+                .animate({
+                    alpha:0,
+                    call:play
+                }, 600);
+
           });
 
+    };
 
-    var winBox = new Container(stageW, stageH, ).center();
-    new Rectangle(900,500, red).center(winBox);
-    homeice.sca(1.4).center(winBox).mov(0,150);
-    igloo.sca(.9).center(winBox);
-    mom.sca(.2).center(winBox);
-    sprite1.sca(.15).center(winBox).mov(160,0);
-    heart.center(winBox);
-    
+    function play(){
+      zog("play");
+    };
+    // introFunction();
+
+    var winFunction = function(){
+      var winBox = new Container(stageW, stageH).center();
+      new Rectangle(900,500, blue).center(winBox);
+      bg1.sca(.3).center(winBox);
+      homeice.sca(1.4).center(winBox).mov(0,150);
+      iceblock1.center(winBox).mov(400,-150);
+      igloo.sca(.9).center(winBox);
+      mom.sca(.2).center(winBox).pos(-100, 350, CENTER, TOP);
+      sprite1.addTo(winBox).sca(.15).run({loop:true}).pos(450,400,BOTTOM,RIGHT);
+      heart.centerReg().sca(.3)
+            .pos(340,380,TOP,RIGHT)
+            .wiggle("rotation", 45, 20, 25, 600, 700);
+
+
+      var winMessage = new Label({
+          text:"Yay! Home safe!",
+          size:40,
+          font:"kidspace",
+          color:red,
+          // backgroundColor:red,
+          // shiftVertical:4
+      }).pos(350,200).ske(10).animate({
+        props:({y:-500}),
+        time:1000,
+        from:true,
+      });
+
+
+    };
+
+    // winFunction();
+
+
+    var loseFunction = function(){
+        var loseBox = new Container (stageW, stageH).center();
+        new Rectangle(stageW,stageH, blue).center(loseBox);
+        bg1.sca(.3).center(loseBox);
+        penguinfall.centerReg(loseBox).pos(-150,50,CENTER, BOTTOM);
+
+        // .wiggle("rotation", 21, 20, 21, 1000, 1005);
+
+        homeice.sca(1.4).center(loseBox).mov(200,150);
+        igloo.sca(.9).center(loseBox).mov(200,-28);
+        mom.sca(.2).center(loseBox).pos(100, 350, CENTER, TOP);
+        heart.centerReg().sca(.3)
+              .pos(640,380,TOP,RIGHT)
+              .wiggle("rotation", 45, 20, 25, 600, 700);
+
+        iceblock1.center(loseBox).mov(400,-150);
+
+        var loseMessage = new Label({
+            text:"Oh no! Almost there, try again.",
+            size:40,
+            font:"kidspace",
+            color:red,
+            // backgroundColor:red,
+            // shiftVertical:4
+        }).pos(200,200).ske(10).animate({
+          props:({y:-500}),
+          time:1000,
+          from:true,
+        });
+    };
+
+    loseFunction();
 
 
 
