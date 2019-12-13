@@ -39,19 +39,25 @@
 
 
 
-            var num1 = frame.asset("number1.png");
-            var num2 = frame.asset("number2.png");
-            var num3 = frame.asset("number3.png");
-            var num4 = frame.asset("number4.png");
-            var num5 = frame.asset("number5.png");
-            var num6 = frame.asset("number6.png");
-            var num7 = frame.asset("number7.png");
-            var num8 = frame.asset("number8.png");
-            var num9 = frame.asset("number9.png");
-            var num0 = frame.asset("number0.png");
+            var num1 = frame.asset("number1.png").sca(.2);
+            var num2 = frame.asset("number2.png").sca(.2);
+            var num3 = frame.asset("number3.png").sca(.2);
+            var num4 = frame.asset("number4.png").sca(.2);
+            var num5 = frame.asset("number5.png").sca(.2);
+            var num6 = frame.asset("number6.png").sca(.2);
+            var num7 = frame.asset("number7.png").sca(.2);
+            var num8 = frame.asset("number8.png").sca(.2);
+            var num9 = frame.asset("number9.png").sca(.2);
+            var num0 = frame.asset("number0.png").sca(.2);
 
-            // var numbers = ["num0","num1", "num2", "num3", "num4", "num5", "num6", "num7", "num8", "num9"];
-            // var number = numbers[rand(numbers.length-1)];
+            var numbers = [num0,num1, num2, num3, num4, num5, num6, num7, num8, num9];
+
+            var chosenNumbers = [];
+
+            for (let i =0; i<5; i++){
+              let chosenIndex = rand(0,9)
+              chosenNumbers.push(numbers[chosenIndex])
+            };
 
             //backgrund scroller
             var background = asset("background-02.png").addTo().sca(.3);
@@ -66,13 +72,7 @@
             var numbox = new Container(500,100).center().pos(0,30,CENTER,TOP).outline();
 
             //series of numbers at top
-            var objects = series(
-                num1.sca(.1),
-                num3.sca(.1),
-                num2.sca(.1),
-                num5.sca(.1),
-                num4.sca(.1)
-            );
+            var objects = series(chosenNumbers);
 
             //animating in the series of numbers
             var parts = new Tile(objects, 5, 1).centerReg(numbox).animate({
