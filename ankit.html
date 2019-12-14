@@ -242,6 +242,15 @@
 						let x = rand(margin, stageW / 2)
 						let y = rand(margin, stageH / 2)
 						iceblocks[i].pos(x, y)
+
+						iceblocks[i].wiggle(
+							'x',
+							iceblocks[i].x,
+							2,
+							3,
+							700,
+							2000
+						)
 					}
 					// zog(iceblocks)
 
@@ -372,14 +381,16 @@
 					.pos(-160, 100, true, false)
 					.ord(1)
 				new asset('iceblock-1.png').clone().centerReg(momPlace)
+
 				new asset('igloo.png')
 					.sca(0.6)
 					.centerReg(momPlace)
 					.pos(110, -40)
-				new asset('mom.png')
+				let momPenguin = new asset('mom.png')
 					.centerReg(momPlace)
 					.sca(0.15)
 					.pos(120, -40)
+				momPenguin.wiggle('x', momPenguin.x, 2, 3, 300, 1000)
 
 				// ============================= GAME OVER
 				let gameEndsCont = new Container(stageW, stageH).center()
