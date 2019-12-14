@@ -1,238 +1,301 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-<head>
-<meta charset="utf-8" />
-<title>ZIM - Code Creativity</title>
+	<head>
+		<meta charset="utf-8" />
+		<title>ZIM - Code Creativity</title>
 
-<!-- Welcome to ZIM at https://zimjs.com - Code Creativity!                              -->
-<!-- ZIM runs on the HTML Canvas powered by JavaScript and CreateJS https://createjs.com -->
-<!-- Founded by Inventor Dan Zen - http://danzen.com - Canadian New Media Award Winner   -->
-<!-- ZIM is free to use. You can donate to help improve ZIM at https://zimjs.com/donate  -->
+		<!-- Welcome to ZIM at https://zimjs.com - Code Creativity!                              -->
+		<!-- ZIM runs on the HTML Canvas powered by JavaScript and CreateJS https://createjs.com -->
+		<!-- Founded by Inventor Dan Zen - http://danzen.com - Canadian New Media Award Winner   -->
+		<!-- ZIM is free to use. You can donate to help improve ZIM at https://zimjs.com/donate  -->
 
-<script src="https://zimjs.org/cdn/1.2.3/createjs_min.js"></script>
-<script src="https://zimjs.org/cdn/10.6.1/zim.js"></script>
-<!-- use zimjs.com/distill for minified individual functions! -->
+		<script src="https://zimjs.org/cdn/1.2.3/createjs_min.js"></script>
+		<script src="https://zimjs.org/cdn/10.6.1/zim.js"></script>
+		<!-- use zimjs.com/distill for minified individual functions! -->
 
-<script>
+		<script>
+			// SCALING OPTIONS
+			// scaling can have values as follows with full being the default
+			// "fit"	sets canvas and stage to dimensions and scales to fit inside window size
+			// "outside"	sets canvas and stage to dimensions and scales to fit outside window size
+			// "full"	sets stage to window size with no scaling
+			// "tagID"	add canvas to HTML tag of ID - set to dimensions if provided - no scaling
 
-// SCALING OPTIONS
-// scaling can have values as follows with full being the default
-// "fit"	sets canvas and stage to dimensions and scales to fit inside window size
-// "outside"	sets canvas and stage to dimensions and scales to fit outside window size
-// "full"	sets stage to window size with no scaling
-// "tagID"	add canvas to HTML tag of ID - set to dimensions if provided - no scaling
+			const scaling = 'fit' // this will resize to fit inside the screen dimensions
+			const width = 1024
+			const height = 768
+			const color = light // ZIM colors like green, blue, pink, faint, clear, etc.
+			const outerColor = dark // any HTML colors like "violet", "#333", etc. are fine to use
+			const assets = [
+				'music.mp3',
+				'yaysfx.mp3',
+				'uhohsfx.mp3',
+				'iceblock1.png',
+				'penguinfall.png',
+				'homeice.png',
+				'igloo.png',
+				'mom.png',
+				'introback.png',
+				'penguin_1-01.png',
+				'heart.png',
+				'background-02.png',
+				{ font: 'kidspace', src: 'Kidspace-DEMO.otf' }
+			]
+			const path = 'assets/'
 
-const scaling = "fit"; // this will resize to fit inside the screen dimensions
-const width = 1024;
-const height = 768;
-const color = light; // ZIM colors like green, blue, pink, faint, clear, etc.
-const outerColor = dark; // any HTML colors like "violet", "#333", etc. are fine to use
-const assets = ["music.mp3", "yaysfx.mp3", "uhohsfx.mp3", "iceblock1.png", "penguinfall.png", "homeice.png", "igloo.png","mom.png", "introback.png", "penguin_1-01.png", "heart.png", "background-02.png",{font:"kidspace", src:"Kidspace-DEMO.otf"}];
-const path = "assets/";
+			const frame = new Frame(
+				scaling,
+				width,
+				height,
+				color,
+				outerColor,
+				assets,
+				path
+			)
+			frame.on('ready', () => {
+				// ES6 Arrow Function - like function(){}
+				zog('ready from ZIM Frame') // logs in console (F12 - choose console)
 
-const frame = new Frame(scaling, width, height, color, outerColor, assets, path);
-frame.on("ready", () => { // ES6 Arrow Function - like function(){}
-    zog("ready from ZIM Frame"); // logs in console (F12 - choose console)
+				const stage = frame.stage
+				let stageW = frame.width
+				let stageH = frame.height
 
-    const stage = frame.stage;
-    let stageW = frame.width;
-    let stageH = frame.height;
+				var mom = frame.asset('mom.png')
+				var heart = frame.asset('heart.png')
+				var bg = frame.asset('introback.png')
+				var homeice = frame.asset('homeice.png')
+				var igloo = frame.asset('igloo.png')
+				var bg1 = frame.asset('background-02.png')
+				var penguinfall = frame.asset('penguinfall.png')
+				var iceblock1 = frame.asset('iceblock1.png')
 
-    var mom = frame.asset("mom.png");
-    var heart = frame.asset("heart.png");
-    var bg = frame.asset("introback.png");
-    var homeice = frame.asset("homeice.png");
-    var igloo = frame.asset("igloo.png");
-    var bg1 = frame.asset("background-02.png");
-    var penguinfall = frame.asset("penguinfall.png");
-    var iceblock1 = frame.asset("iceblock1.png");
+				// var background = asset("background-02.png").addTo().sca(.3);
 
-    // var background = asset("background-02.png").addTo().sca(.3);
+				// see https://zimjs.com/learn.html for video and code tutorials
+				// see https://zimjs.com/docs.html for documentation
+				// see https://zimjs.com/bits.html for 64 Interactive Media techniques
 
+				// put your code here (you can delete this sample code)
 
-    // see https://zimjs.com/learn.html for video and code tutorials
-    // see https://zimjs.com/docs.html for documentation
-    // see https://zimjs.com/bits.html for 64 Interactive Media techniques
+				var sprite1 = new Sprite({
+					image: asset('penguin_1-01.png'),
+					cols: 2,
+					rows: 1,
+					count: 2
+				})
 
-    // put your code here (you can delete this sample code)
+				var introFunction = function() {
+					//Intro Box
+					var introBox = new Container(stageW, stageH).center()
 
-    var sprite1 = new Sprite({
-        image:asset("penguin_1-01.png"),
-        cols:2,
-        rows:1,
-        count:2,
-    });
+					var intro = new Rectangle({
+						width: stageW,
+						height: stageH,
+						color: red
+						// corner:28,
+					}).center(introBox)
 
+					bg.centerReg(intro).sca(0.35)
 
+					sprite1
+						.addTo(intro)
+						.sca(0.3)
+						.run({ loop: true })
+						.pos(50, 530, BOTTOM, RIGHT) //animate inside of the run!!!
 
-    var introFunction = function(){
-      //Intro Box
-      var introBox = new Container(stageW, stageH).center();
+					mom.addTo(introBox)
+						.sca(0.15)
+						.pos(875, -5, TOP, RIGHT)
+					heart
+						.addTo(introBox)
+						.centerReg()
+						.sca(0.3)
+						.pos(870, 10, TOP, RIGHT)
+						.wiggle('rotation', 45, 20, 25, 600, 700)
 
-      var intro = new Rectangle({
-          width:stageW,
-          height:stageH,
-          color:red,
-          // corner:28,
-      }).center(introBox);
+					var title = new Label({
+						text: 'Take Me Home',
+						size: 70,
+						font: 'kidspace',
+						color: '#0d1d1c',
+						// backgroundColor:red,
+						shiftVertical: 4
+					})
+						.addTo(introBox)
+						.pos(50, 150)
+						.ske(10)
+						.animate({
+							// props:{alpha:.4},
+							// wait:2000
+						})
 
-      bg.centerReg(intro).sca(.35);
+					var instructionsBox = new Rectangle(
+						480,
+						150,
+						white,
+						null,
+						null,
+						30
+					)
+						.addTo(introBox)
+						.pos(50, 220, LEFT, TOP)
+						.alp(0.8)
+					var title = new Label({
+						text:
+							'OH NO! Kyle the Penguin is stuck! \nHelp him get home & catch fish for dinner by hopping \non the icebergs from the lowest number to the \nhighest number. Good Luck!',
+						font: 'kidspace',
+						size: 15,
+						color: black,
+						align: 'left',
+						// backgroundColor:red,
+						lineHeight: 30,
+						shiftVertical: 4
+					})
+						.addTo(instructionsBox)
+						.pos(10, 10)
+						.animate({
+							// props:{alpha:.4},
+							// wait:2000
+						})
 
-      sprite1.addTo(intro).sca(.3).run({loop:true}).pos(50,530,BOTTOM,RIGHT); //animate inside of the run!!!
+					var start = new Button({
+						backgroundColor: '#0d1d1c',
+						rollBackgroundColor: '#0d1d1c',
+						label: 'PLAY',
+						color: white
+					})
+						.sca(1)
+						.addTo(introBox)
+						.centerReg()
+						.pos(250, 100, CENTER, BOTTOM)
+						.tap(function() {
+							introBox.cache().animate(
+								{
+									alpha: 0,
+									call: play
+								},
+								600
+							)
+							// asset("music.mp3").play();
+						})
+				}
 
-      mom.addTo(introBox).sca(.15).pos(875,-5,TOP,RIGHT);
-      heart.addTo(introBox).centerReg().sca(.3)
-            .pos(870,10,TOP,RIGHT)
-            .wiggle("rotation", 45, 20, 25, 600, 700);
+				function play() {
+					zog('play')
+				}
+				// introFunction()
 
-      var title = new Label({
-          text:"Take Me Home",
-          size:70,
-          font:"kidspace",
-          color:'#0d1d1c',
-          // backgroundColor:red,
-          shiftVertical:4
-      }).addTo(introBox).pos(50,150).ske(10).animate({
-          // props:{alpha:.4},
-          // wait:2000
-      });
+				var winFunction = function() {
+					// asset("yaysfx.mp3").play();
+					var winBox = new Container(stageW, stageH).center()
+					new Rectangle(900, 500, blue).center(winBox)
+					bg1.sca(0.3).center(winBox)
+					homeice
+						.sca(1.4)
+						.center(winBox)
+						.mov(0, 150)
+					iceblock1.center(winBox).mov(400, -150)
+					igloo.sca(0.9).center(winBox)
+					mom.sca(0.2)
+						.center(winBox)
+						.pos(-100, 350, CENTER, TOP)
+					sprite1
+						.addTo(winBox)
+						.sca(0.15)
+						.run({ loop: true })
+						.pos(450, 400, BOTTOM, RIGHT)
+					heart
+						.centerReg()
+						.sca(0.3)
+						.pos(340, 380, TOP, RIGHT)
+						.wiggle('rotation', 45, 20, 25, 600, 700)
 
-      var instructionsBox = new Rectangle(480,150, white, null,null,30).addTo(introBox).pos(50,220,LEFT,TOP).alp(.8);
-      var title = new Label({
-          text:"OH NO! Kyle the Penguin is stuck! \nHelp him get home & catch fish for dinner by hopping \non the icebergs from the lowest number to the \nhighest number. Good Luck!",
-          font:"kidspace",
-          size:15,
-          color:black,
-          align:"left",
-          // backgroundColor:red,
-          lineHeight:30,
-          shiftVertical:4
-      }).addTo(instructionsBox).pos(10,10).animate({
-          // props:{alpha:.4},
-          // wait:2000
-      });
+					var winMessage = new Label({
+						text: 'Yay! Home safe!',
+						size: 40,
+						font: 'kidspace',
+						color: '#0d1d1c'
+						// backgroundColor:red,
+						// shiftVertical:4
+					})
+						.pos(350, 150)
+						.ske(10)
+						.animate({
+							props: { y: -500 },
+							time: 1000,
+							from: true
+						})
 
-      var start = new Button({
-              backgroundColor: '#0d1d1c',
-              rollBackgroundColor: '#0d1d1c',
-              label: "PLAY",
-              color: white
-          }).sca(1)
-          .addTo(introBox)
-          .centerReg()
-          .pos(250, 100, CENTER, BOTTOM, )
-          .tap(function() {
-            introBox
-                .cache()
-                .animate({
-                    alpha:0,
-                    call:play
-                }, 600);
-                // asset("music.mp3").play();
+					new Scroller({
+						backing: background,
+						speed: 0.5,
+						gapFix: 1
+					})
+				}
 
-          });
+				// winFunction()
 
-    };
+				var loseFunction = function() {
+					// asset("uhohsfx.mp3").play();
+					var loseBox = new Container(stageW, stageH).center()
+					new Rectangle(stageW, stageH, blue).center(loseBox)
+					bg1.sca(0.3).center(loseBox)
+					penguinfall.centerReg(loseBox).pos(-150, 50, CENTER, BOTTOM)
 
-    function play(){
-      zog("play");
-    };
-    introFunction();
+					// .wiggle("rotation", 21, 20, 21, 1000, 1005);
 
+					homeice
+						.sca(1.4)
+						.center(loseBox)
+						.mov(200, 150)
+					igloo
+						.sca(0.9)
+						.center(loseBox)
+						.mov(200, -28)
+					mom.sca(0.2)
+						.center(loseBox)
+						.pos(100, 350, CENTER, TOP)
+					heart
+						.centerReg()
+						.sca(0.3)
+						.pos(640, 380, TOP, RIGHT)
+						.wiggle('rotation', 45, 20, 25, 600, 700)
 
+					iceblock1.center(loseBox).mov(400, -150)
 
-    var winFunction = function(){
-      // asset("yaysfx.mp3").play();
-      var winBox = new Container(stageW, stageH).center();
-      new Rectangle(900,500, blue).center(winBox);
-      bg1.sca(.3).center(winBox);
-      homeice.sca(1.4).center(winBox).mov(0,150);
-      iceblock1.center(winBox).mov(400,-150);
-      igloo.sca(.9).center(winBox);
-      mom.sca(.2).center(winBox).pos(-100, 350, CENTER, TOP);
-      sprite1.addTo(winBox).sca(.15).run({loop:true}).pos(450,400,BOTTOM,RIGHT);
-      heart.centerReg().sca(.3)
-            .pos(340,380,TOP,RIGHT)
-            .wiggle("rotation", 45, 20, 25, 600, 700);
+					var loseMessage = new Label({
+						text: 'Oh no! Almost there, try again.',
+						size: 40,
+						font: 'kidspace',
+						color: '#0d1d1c'
+						// backgroundColor:red,
+						// shiftVertical:4
+					})
+						.pos(200, 150)
+						.ske(10)
+						.animate({
+							props: { y: -500 },
+							time: 1000,
+							from: true
+						})
 
+					new Scroller({
+						backing: background,
+						speed: 0.5,
+						gapFix: 1
+					})
+				}
 
-      var winMessage = new Label({
-          text:"Yay! Home safe!",
-          size:40,
-          font:"kidspace",
-          color:'#0d1d1c',
-          // backgroundColor:red,
-          // shiftVertical:4
-      }).pos(350,150).ske(10).animate({
-        props:({y:-500}),
-        time:1000,
-        from:true,
-      });
+				loseFunction()
 
+				stage.update() // this is needed to show any changes
+			}) // end of ready
+		</script>
 
-      new Scroller({
-          backing:background,
-          speed:.5,
-          gapFix:1,
-      });
-    };
+		<meta name="viewport" content="width=device-width, user-scalable=no" />
+	</head>
 
-    // winFunction();
-
-
-    var loseFunction = function(){
-        // asset("uhohsfx.mp3").play();
-        var loseBox = new Container (stageW, stageH).center();
-        new Rectangle(stageW,stageH, blue).center(loseBox);
-        bg1.sca(.3).center(loseBox);
-        penguinfall.centerReg(loseBox).pos(-150,50,CENTER, BOTTOM);
-
-        // .wiggle("rotation", 21, 20, 21, 1000, 1005);
-
-        homeice.sca(1.4).center(loseBox).mov(200,150);
-        igloo.sca(.9).center(loseBox).mov(200,-28);
-        mom.sca(.2).center(loseBox).pos(100, 350, CENTER, TOP);
-        heart.centerReg().sca(.3)
-              .pos(640,380,TOP,RIGHT)
-              .wiggle("rotation", 45, 20, 25, 600, 700);
-
-        iceblock1.center(loseBox).mov(400,-150);
-
-        var loseMessage = new Label({
-            text:"Oh no! Almost there, try again.",
-            size:40,
-            font:"kidspace",
-            color:'#0d1d1c',
-            // backgroundColor:red,
-            // shiftVertical:4
-        }).pos(200,150).ske(10).animate({
-          props:({y:-500}),
-          time:1000,
-          from:true,
-        });
-
-        new Scroller({
-            backing:background,
-            speed:.5,
-            gapFix:1,
-        });
-    };
-
-    // loseFunction();
-
-
-
-    stage.update(); // this is needed to show any changes
-
-}); // end of ready
-
-</script>
-
-<meta name="viewport" content="width=device-width, user-scalable=no" />
-
-</head>
-
-<body>
-<!-- canvas with id="myCanvas" is made by zim Frame -->
-</body>
+	<body>
+		<!-- canvas with id="myCanvas" is made by zim Frame -->
+	</body>
 </html>

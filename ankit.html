@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8" />
-		<title>ZIM - Code Creativity</title>
+		<title>Take Me Home</title>
 
 		<!-- Welcome to ZIM at https://zimjs.com - Code Creativity!                              -->
 		<!-- ZIM runs on the HTML Canvas powered by JavaScript and CreateJS https://createjs.com -->
@@ -21,7 +21,7 @@
 			// "full"	sets stage to window size with no scaling
 			// "tagID"	add canvas to HTML tag of ID - set to dimensions if provided - no scaling
 
-			const scaling = 'fit' // this will resize to fit inside the screen dimensions
+			const scaling = 'full' // this will resize to fit inside the screen dimensions
 			const width = 1024
 			const height = 1024
 			const color = '#B2E0DE' // ZIM colors like green, blue, pink, faint, clear, etc.
@@ -57,7 +57,15 @@
 				'splash.mp3',
 				'uhoh.mp3',
 				'yay.mp3',
-				'point.mp3'
+				'point.mp3',
+				'introback.png',
+				'penguin_1-01.png',
+				'heart.png',
+				'background-02.png',
+				'iceblock1.png',
+				'penguinfall.png',
+				'homeice.png',
+				{ font: 'kidspace', src: 'Kidspace-DEMO.otf' }
 			]
 			const path = 'assets/'
 			const frame = new Frame(
@@ -190,10 +198,136 @@
 				let uhoh = asset('uhoh.mp3')
 				let ohno = asset('ohno.mp3')
 
+				// ========== INTRO
+				var mom = frame.asset('mom.png')
+				var heart = frame.asset('heart.png')
+				var bg = frame.asset('introback.png')
+				var homeice = frame.asset('homeice.png')
+				var igloo = frame.asset('igloo.png')
+				var bg1 = frame.asset('background-02.png')
+				var penguinfall = frame.asset('penguinfall.png')
+				var iceblock1 = frame.asset('iceblock1.png')
+
+				// var background = asset("background-02.png").addTo().sca(.3);
+
+				// see https://zimjs.com/learn.html for video and code tutorials
+				// see https://zimjs.com/docs.html for documentation
+				// see https://zimjs.com/bits.html for 64 Interactive Media techniques
+
+				// put your code here (you can delete this sample code)
+
+				var sprite1 = new Sprite({
+					image: asset('penguin_1-01.png'),
+					cols: 2,
+					rows: 1,
+					count: 2
+				})
+
+				var introFunction = function() {
+					//Intro Box
+					var introBox = new Container(stageW, stageH).center()
+
+					var intro = new Rectangle({
+						width: stageW,
+						height: stageH,
+						color: '#fff'
+						// corner:28,
+					}).center(introBox)
+
+					bg.centerReg(intro).sca(0.35)
+
+					sprite1
+						.addTo(intro)
+						.sca(0.4)
+						.run({ loop: true })
+						.pos(150, 0, false, true) //animate inside of the run!!!
+
+					mom.addTo(introBox)
+						.sca(0.15)
+						.pos(875, -5, TOP, RIGHT)
+					heart
+						.addTo(introBox)
+						.centerReg()
+						.sca(0.4)
+						.pos(870, 10, TOP, RIGHT)
+						.wiggle('rotation', 45, 20, 25, 600, 700)
+
+					var title = new Label({
+						text: 'Take Me Home',
+						size: 70,
+						font: 'kidspace',
+						color: '#0d1d1c',
+						// backgroundColor:red,
+						shiftVertical: 4
+					})
+						.centerReg(introBox)
+						.pos(null, 250)
+						.ske(10)
+						.animate({
+							// props:{alpha:.4},
+							// wait:2000
+						})
+
+					var instructionsBox = new Rectangle(
+						500,
+						200,
+						white,
+						null,
+						null,
+						30
+					)
+						.centerReg(introBox)
+						.alp(0.8)
+						.pos(null, 350)
+						.sca(1.2)
+					var title = new Label({
+						text:
+							'OH NO! Kyle the Penguin is stuck! \nHelp him get home & catch fish for dinner by hopping \non the icebergs from the lowest number to the \nhighest number. Good Luck!',
+						font: 'kidspace',
+						size: 15,
+						color: black,
+						align: 'left',
+						// backgroundColor:red,
+						lineHeight: 30,
+						// shiftVertical: 4,
+						padding: 60
+					})
+						.addTo(instructionsBox)
+						.pos(40, 40)
+						.animate({
+							// props:{alpha:.4},
+							// wait:2000
+						})
+
+					var start = new Button({
+						backgroundColor: '#0d1d1c',
+						rollBackgroundColor: '#0d1d1c',
+						label: 'PLAY',
+						color: white
+					})
+						.sca(1)
+						.centerReg(introBox)
+						.pos(null, 200, false, true)
+						.tap(function() {
+							play()
+							introBox.cache().animate(
+								{
+									alpha: 0
+								},
+								600
+							)
+							// asset("music.mp3").play();
+						})
+					start.wiggle('scale', start.scale, 0.05, 0.08, 600, 1000)
+				}
+				introFunction()
+				// ========= END OF INTRO
+
 				// ============================== PLAY GAME
 				let play = function() {
 					// soundtrack.play({ volume: 0.5 })
 					// soundtrack.volume = 0.9
+					zog('game play called')
 					// RESET SCORE
 					time = timeLimit
 					fish.text = 0
@@ -229,9 +363,9 @@
 
 						ice.centerReg(iceblocks[i])
 
-						num.sca(0.15)
+						num.sca(0.18)
 							.centerReg(iceblocks[i])
-							.pos(null, 30, null, true)
+							.pos(null, 70, null, true)
 						// .outline()
 
 						iceblocks[i].penValue = numCollection[i].value // adding a custom property so that real value can be derived while doing hittest
@@ -241,7 +375,7 @@
 
 						let x = rand(margin, stageW / 2)
 						let y = rand(margin, stageH / 2)
-						iceblocks[i].pos(x, y)
+						iceblocks[i].pos(x, y).sca(1.2)
 
 						iceblocks[i].wiggle(
 							'x',
@@ -373,13 +507,13 @@
 						time
 					)
 				}
-				play()
+				// play()
 
 				// MOM PENGUIN
 				let momPlace = new Container(400, 200)
 					.centerReg()
 					.pos(-160, 100, true, false)
-					.ord(1)
+					.ord(-1)
 				new asset('iceblock-1.png').clone().centerReg(momPlace)
 
 				new asset('igloo.png')
@@ -445,27 +579,29 @@
 						time: 200
 					})
 
-					play()
+					// play()
 				}
 
 				// GAME OVER FN
 				function gameOver() {
 					timeKeeper.clear()
 					ohno.play()
+					loseFunction()
 					// remove gameplay area
-					gamePlay.animate({
-						props: {
-							y: stageH + 400
-						},
-						time: 400
-					})
+					// gamePlay.animate({
+					// 	props: {
+					// 		y: stageH + 400
+					// 	},
+					// 	time: 400,
+					// 	call: loseFunction
+					// })
 
-					gameEndsCont.animate({
-						props: {
-							y: 0
-						},
-						time: 200
-					})
+					// gameEndsCont.animate({
+					// 	props: {
+					// 		y: 0
+					// 	},
+					// 	time: 200
+					// })
 				}
 				// GAME WIN
 				function win() {
@@ -474,12 +610,12 @@
 					// soundtrack.volume = 0.5
 					yay.play()
 					hasWon = true
-					gamePlay.animate({
-						props: {
-							y: stageH + 400
-						},
-						time: 400
-					})
+					// gamePlay.animate({
+					// 	props: {
+					// 		y: stageH + 400
+					// 	},
+					// 	time: 400
+					// })
 					penguin.top()
 					penguin.animate({
 						props: {
@@ -488,11 +624,201 @@
 							scale: 0.6
 						},
 						wait: 350,
-						time: 700
+						time: 700,
+						call: winFunction
 					})
 				}
 
 				// ==================
+
+				// ==================== WIN FUNCTION
+
+				var winFunction = function() {
+					// asset("yaysfx.mp3").play();
+					var winBox = new Container(stageW, stageH).center().top()
+					new Rectangle({
+						width: stageW,
+						height: stageH,
+						color: '#ffffff'
+					}).centerReg(winBox)
+					new Rectangle(900, 500, '#ffffff').center(winBox).outline()
+					bg1.clone()
+						.sca(0.3)
+						.center(winBox)
+					homeice
+						.clone()
+						.sca(1.6)
+						.center(winBox)
+						.mov(0, 10)
+
+					iceblock1
+						.clone()
+						.center(winBox)
+						.mov(400, -150)
+					igloo
+						.clone()
+						.sca(1.1)
+						.center(winBox)
+						.mov(0, -140)
+					mom.sca(0.2)
+						.clone()
+						.centerReg(winBox)
+						.mov(0, -90)
+
+					sprite1
+						.clone()
+						.centerReg(winBox)
+						.sca(0.15)
+						.run({ loop: true })
+						.mov(-60, -70)
+						.top()
+					heart
+						.clone()
+						.centerReg(winBox)
+						.sca(0.3)
+						.pos(340, 380, TOP, RIGHT)
+						.wiggle('rotation', 45, 20, 25, 600, 700)
+
+					var winMessage = new Label({
+						text: 'Yay! Home safe!',
+						size: 60,
+						font: 'kidspace',
+						color: '#0d1d1c'
+						// backgroundColor:red,
+						// shiftVertical:4
+					})
+						.centerReg(winBox)
+						.pos(null, 120)
+						.ske(10)
+						.animate({
+							props: { y: -500 },
+							time: 1000,
+							from: true
+						})
+
+					// PLAY AGAIN BUTTON 1
+					var start = new Button({
+						backgroundColor: '#0d1d1c',
+						rollBackgroundColor: '#0d1d1c',
+						label: 'PLAY',
+						color: white
+					})
+						.sca(1)
+						.centerReg(winBox)
+						.pos(null, 200, false, true)
+						.tap(function() {
+							// winBox.cache().animate(
+							// 	{
+							// 		alpha: 0
+							// 	},
+							// 	600
+							// )
+							winBox.removeFrom(stage)
+							play()
+							// asset("music.mp3").play();
+						})
+					start.wiggle('scale', start.scale, 0.05, 0.08, 600, 1000)
+					// =
+
+					// new Scroller({
+					// 	backing: background,
+					// 	speed: 0.5,
+					// 	gapFix: 1
+					// })
+				}
+				// winFunction()
+
+				// ==================== END OF WIN FUNCTION
+
+				// ===================== LOSE FUNCTION
+
+				var loseFunction = function() {
+					// asset("uhohsfx.mp3").play();
+					var loseBox = new Container(stageW, stageH).center()
+					new Rectangle({
+						width: stageW,
+						height: stageH,
+						color: '#ffffff'
+					}).centerReg(loseBox)
+					bg1.sca(0.3).center(loseBox)
+
+					penguinfall.centerReg(loseBox).mov(0, 250)
+					// .wiggle("rotation", 21, 20, 21, 1000, 1005);
+
+					homeice
+						.clone()
+						.sca(1.6)
+						.center(loseBox)
+						.mov(0, 10)
+
+					iceblock1
+						.clone()
+						.center(loseBox)
+						.mov(400, -150)
+					igloo
+						.clone()
+						.sca(1.1)
+						.center(loseBox)
+						.mov(0, -140)
+					mom.sca(0.2)
+						.clone()
+						.centerReg(loseBox)
+						.mov(0, -90)
+
+					iceblock1.center(loseBox).mov(400, -150)
+
+					var loseMessage = new Label({
+						text: 'Oh no! Almost there, try again.',
+						size: 50,
+						font: 'kidspace',
+						color: '#0d1d1c'
+						// backgroundColor:red,
+						// shiftVertical:4
+					})
+						.centerReg(loseBox)
+						.pos(null, 120)
+						.ske(10)
+						.animate({
+							props: { y: -500 },
+							time: 1000,
+							from: true
+						})
+
+					// new Scroller({
+					// 	backing: background,
+					// 	speed: 0.5,
+					// 	gapFix: 1
+					// }).centerReg(loseBox)
+
+					// PLAY AGAIN BUTTON 1
+					var start = new Button({
+						backgroundColor: '#0d1d1c',
+						rollBackgroundColor: '#0d1d1c',
+						label: 'PLAY',
+						color: white
+					})
+						.sca(1)
+						.centerReg(loseBox)
+						.pos(null, 90, false, true)
+						.tap(function() {
+							// loseBox.cache().animate(
+							// 	{
+							// 		alpha: 0
+							// 	},
+							// 	600
+							// )
+							loseBox.removeFrom(stage)
+							play()
+							// asset("music.mp3").play();
+						})
+					start.wiggle('scale', start.scale, 0.05, 0.08, 600, 1000)
+
+					// =
+				}
+
+				// loseFunction()
+
+				// ================== END OF LOSE FUNCTION
 
 				stage.update() // this is needed to show any changes
 			}) // end of ready
